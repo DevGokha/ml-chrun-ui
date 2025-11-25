@@ -43,20 +43,12 @@ Run the app locally and open http://localhost:3000 to view the UI. The form allo
    yarn dev
 4. Open http://localhost:3000
 
-## Configuration
-The frontend posts form data to a backend prediction endpoint. By default the API URL is defined in the page source:
-
-const API_URL = "http://127.0.0.1:8000/predict";
-
-For a more robust setup, configure an environment variable in .env.local:
-
-NEXT_PUBLIC_API_URL=https://your-backend.example.com/predict
-
-Then reference process.env.NEXT_PUBLIC_API_URL in your code so the URL can be changed without editing source files.
 
 ## Autofill Demo Sample
 Use this JSON as a demo payload (or via the UI's autofill feature):
 
+
+```json
 {
   "State": "OH",
   "Account_length": 120,
@@ -78,14 +70,29 @@ Use this JSON as a demo payload (or via the UI's autofill feature):
   "Total_intl_charge": 3.38,
   "Customer_service_calls": 2
 }
+```
 
 ## Folder Structure
-- app/ — Next.js app routes and pages
-- components/ — UI components
-- public/ — static assets
-- styles/ — global styles and Tailwind configuration
-- package.json
-- next.config.js
+ml-chrun-ui/
+├─ .git/
+├─ .next/
+├─ app/
+│  ├─ favicon.ico
+│  ├─ globals.css
+│  ├─ layout.tsx
+│  └─ page.tsx
+├─ node_modules/
+├─ public/
+├─ .gitignore
+├─ eslint.config.mjs
+├─ next-env.d.ts
+├─ next.config.js
+├─ package.json
+├─ package-lock.json
+├─ postcss.config.mjs
+├─ README.md
+├─ tsconfig.json
+└─ ../ml-chrun-api/  
 
 ## Author
 Dev Gokha — AI & MERN Developer | Machine Learning Engineer
