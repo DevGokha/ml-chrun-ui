@@ -73,26 +73,27 @@ Use this JSON as a demo payload (or via the UI's autofill feature):
 ```
 
 ## Folder Structure
-ml-chrun-ui/
-├─ .git/
-├─ .next/
-├─ app/
-│  ├─ favicon.ico
-│  ├─ globals.css
-│  ├─ layout.tsx
-│  └─ page.tsx
-├─ node_modules/
-├─ public/
-├─ .gitignore
-├─ eslint.config.mjs
-├─ next-env.d.ts
-├─ next.config.js
-├─ package.json
-├─ package-lock.json
-├─ postcss.config.mjs
-├─ README.md
-├─ tsconfig.json
-└─ ../ml-chrun-api/  
+## Folder Structure
+- ml-chrun-ui/
+  - .git/
+  - .next/
+  - app/
+    - favicon.ico
+    - globals.css
+    - layout.tsx
+    - page.tsx
+  - node_modules/
+  - public/
+  - .gitignore
+  - eslint.config.mjs
+  - next-env.d.ts
+  - next.config.js
+  - package.json
+  - package-lock.json
+  - postcss.config.mjs
+  - README.md
+  - tsconfig.json
+  - ../ml-chrun-api/ (sibling workspace
 
 ## Author
 Dev Gokha — AI & MERN Developer | Machine Learning Engineer
