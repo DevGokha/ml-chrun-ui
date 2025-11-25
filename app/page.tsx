@@ -78,7 +78,7 @@ export default function Home() {
     setResult(null);
 
     try {
-      const response = await fetch("https://ml-chrun-api.onrender.com", {
+      const response = await fetch("https://ml-chrun-api.onrender.com/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
