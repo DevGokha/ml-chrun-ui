@@ -65,7 +65,7 @@ Use this JSON as a demo payload (or via the UI's autofill feature):
 }
 ```
 
-## Folder Structure
+
 ## Folder Structure
 - ml-chrun-ui/
   - .git/
@@ -86,7 +86,7 @@ Use this JSON as a demo payload (or via the UI's autofill feature):
   - postcss.config.mjs
   - README.md
   - tsconfig.json
-  - ../ml-chrun-api/ (sibling workspace
+  - ../ml-chrun-api/ (sibling workspace)
 
 ## Author
 Dev Gokha — AI & MERN Developer | Machine Learning Engineer
