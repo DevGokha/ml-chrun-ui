@@ -22,13 +22,6 @@ Key use cases:
 - Tailwind CSS
 - Axios
 
-## Demo
-Run the app locally and open http://localhost:3000 to view the UI. The form allows manual entry or autofill for demo data and returns a prediction from the backend API.
-
-## Prerequisites
-- Node.js >= 18
-- npm or yarn
-- A running backend API endpoint that exposes a /predict route (FastAPI or equivalent)
 
 ## Installation
 1. Clone the repository:
