@@ -1,65 +1,177 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
+  const [formData, setFormData] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<any>(null);
+
+  const fields = [
+    { name: "State", type: "text" },
+    { name: "Account_length", type: "number" },
+    { name: "Area_code", type: "number" },
+    { name: "International_plan", type: "select" },
+    { name: "Voice_mail_plan", type: "select" },
+    { name: "Number_vmail_messages", type: "number" },
+    { name: "Total_day_minutes", type: "number" },
+    { name: "Total_day_calls", type: "number" },
+    { name: "Total_day_charge", type: "number" },
+    { name: "Total_eve_minutes", type: "number" },
+    { name: "Total_eve_calls", type: "number" },
+    { name: "Total_eve_charge", type: "number" },
+    { name: "Total_night_minutes", type: "number" },
+    { name: "Total_night_calls", type: "number" },
+    { name: "Total_night_charge", type: "number" },
+    { name: "Total_intl_minutes", type: "number" },
+    { name: "Total_intl_calls", type: "number" },
+    { name: "Total_intl_charge", type: "number" },
+    { name: "Customer_service_calls", type: "number" }
+  ];
+
+  // ⭐ AUTO-FILL SAMPLE VALUES
+  const autofill = () => {
+    const sample = {
+      State: "OH",
+      Account_length: 120,
+      Area_code: 408,
+      International_plan: "no",
+      Voice_mail_plan: "yes",
+      Number_vmail_messages: 20,
+      Total_day_minutes: 300.5,
+      Total_day_calls: 120,
+      Total_day_charge: 45.0,
+      Total_eve_minutes: 200.4,
+      Total_eve_calls: 99,
+      Total_eve_charge: 30.06,
+      Total_night_minutes: 180,
+      Total_night_calls: 90,
+      Total_night_charge: 8.1,
+      Total_intl_minutes: 12.5,
+      Total_intl_calls: 3,
+      Total_intl_charge: 3.75,
+      Customer_service_calls: 2
+    };
+
+    setFormData(sample);
+
+    // auto place values inside inputs
+    setTimeout(() => {
+      Object.entries(sample).forEach(([key, value]) => {
+        const el = document.getElementsByName(key)[0] as HTMLInputElement | HTMLSelectElement;
+        if (el) el.value = String(value);
+      });
+    }, 50);
+  };
+
+  const handleChange = (e: any) => {
+    const name = e.target.name;
+    let value: any = e.target.value;
+
+    if (e.target.type === "number") value = Number(value);
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const predict = async () => {
+    setLoading(true);
+    setResult(null);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      setResult(data);
+    } catch {
+      alert("Backend not reachable");
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-slate-100 flex justify-center p-10">
+      <div className="w-full max-w-5xl bg-white shadow-lg rounded-xl p-10 border">
+
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
+          Customer Churn Prediction
+        </h1>
+
+        {/* 🔹 BUTTONS ROW */}
+        <div className="flex gap-4 mb-8">
+          <button
+            onClick={autofill}
+            className="bg-gray-200 text-gray-800 px-5 py-2 rounded-lg border hover:bg-gray-300"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Autofill Sample Data
+          </button>
+
+          <button
+            onClick={predict}
+            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 w-full"
           >
-            Documentation
-          </a>
+            {loading ? "Predicting..." : "Predict"}
+          </button>
         </div>
-      </main>
+
+        {/* 🔹 FORM */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {fields.map((f) => (
+            <div key={f.name} className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1">
+                {f.name.replaceAll("_", " ")}
+              </label>
+
+              {f.type === "select" ? (
+                <select
+                  name={f.name}
+                  onChange={handleChange}
+                  className="p-3 border rounded-lg bg-white"
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              ) : (
+                <input
+                  type={f.type}
+                  name={f.name}
+                  onChange={handleChange}
+                  className="p-3 border rounded-lg bg-slate-50"
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* 🔹 RESULT */}
+        {result && (
+          <div className="mt-10 p-6 border rounded-xl bg-slate-50">
+            <h2 className="text-xl font-bold mb-3">Prediction Summary</h2>
+
+            <p className="text-lg">
+              <strong>Status: </strong>
+              {result.churn ? (
+                <span className="text-red-600">Customer Will Churn ❌</span>
+              ) : (
+                <span className="text-green-600">Customer Will Stay ✔</span>
+              )}
+            </p>
+
+            <p className="text-lg mt-2">
+              <strong>Probability: </strong>
+              {result.churn_probability !== undefined
+                ? result.churn_probability.toFixed(3)
+                : "N/A"}
+            </p>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }
